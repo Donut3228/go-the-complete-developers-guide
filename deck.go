@@ -6,6 +6,9 @@ import (
 	"math/rand"
 	"os"
 	"strings"
+	"time"
+
+	"github.com/divan/num2words"
 )
 
 // Create a new type of 'deck'
@@ -16,11 +19,15 @@ func newDeck() deck {
 	cards := deck{}
 
 	cardSuits := []string{"Spades", "Diamonds", "Hearts", "Clubs"}
-	cardValues := []string{"Ace", "Two", "Three", "Four"}
+	cardValues := []string{"Ace", "Jack", "Queen", "Knight"}
 
-	for _, suit := range cardSuits {
-		for _, value := range cardValues {
-			cards = append(cards, suit+" of "+value)
+	for i := 2; i < 11; i++ {
+		cardValues = append(cardValues, strings.Title(num2words.Convert(i)))
+	}
+
+	for i, value := range cardValues {
+		for j, suit := range cardSuits {
+			cards = append(cards, fmt.Sprintf("[%d] ", len(cardSuits)*i+(j+1))+value+" of "+suit)
 		}
 	}
 
@@ -28,8 +35,8 @@ func newDeck() deck {
 }
 
 func (d deck) print() {
-	for i, card := range d {
-		fmt.Println(i, card)
+	for _, card := range d {
+		fmt.Println(card)
 	}
 }
 
@@ -38,7 +45,7 @@ func deal(d deck, handSize int) (deck, deck) {
 }
 
 func (d deck) toString() string {
-	return strings.Join([]string(d), ",")
+	return strings.Join([]string(d), "\n")
 }
 
 func (d deck) saveToFile(filename string) error {
@@ -60,8 +67,10 @@ func newDeckFromFile(filename string) deck {
 }
 
 func (d deck) shuffle() {
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+
 	for i := range d {
-		newPosition := rand.Intn(len(d) - 1)
+		newPosition := r.Intn(len(d) - 1)
 
 		d[i], d[newPosition] = d[newPosition], d[i]
 	}
