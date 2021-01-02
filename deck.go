@@ -63,7 +63,7 @@ func newDeckFromFile(filename string) deck {
 		os.Exit(1)
 	}
 
-	return deck(strings.Split(string(bs), ","))
+	return deck(strings.Split(string(bs), "\n"))
 }
 
 func (d deck) shuffle() {
