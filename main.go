@@ -3,5 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("Template")
+	colors := map[string]string{
+		"black": "#000000",
+		"white": "#ffffff",
+	}
+
+	fmt.Println(colors)
 }
