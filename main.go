@@ -13,6 +13,6 @@ func main() {
 		"black": "#000000",
 		"white": "#ffffff",
 	}
-
+	delete(colors, "black")
 	fmt.Println(colors)
 }
