@@ -12,7 +12,16 @@ func main() {
 	colors := map[string]string{
 		"black": "#000000",
 		"white": "#ffffff",
+		"red":   "#ff0000",
+		"green": "#00ff00",
+		"blue":  "#0000ff",
 	}
-	delete(colors, "black")
-	fmt.Println(colors)
+
+	printMap(colors)
+}
+
+func printMap(c map[string]string) {
+	for color, hex := range c {
+		fmt.Printf("Hex code for %s is %s\n", color, hex)
+	}
 }
